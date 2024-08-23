@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "dev.itsactuallyluna9.worldtimetolive.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MOTDMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}
