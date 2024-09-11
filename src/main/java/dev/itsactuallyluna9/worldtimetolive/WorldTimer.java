@@ -76,9 +76,10 @@ public class WorldTimer {
             var now = Instant.now().getEpochSecond();
             var start = startTime.getEpochSecond();
             var end = endTime.getEpochSecond();
-            if (warn_times.contains((int) (end - now) / 60) && lastWarned != (int) (end - now) / 60) {
+            var minutes = (int) (end - now) / 60 + 1;
+            if (state == WorldTimerState.IN_MAIN && warn_times.contains(minutes) && lastWarned != minutes) {
                 warnPlayers();
-                lastWarned = (int) (end - now) / 60;
+                lastWarned = minutes;
             }
         }
     }
@@ -87,6 +88,7 @@ public class WorldTimer {
         // load from config
         this.state = WorldTimerState.UNKNOWN;
         this.enabled = WorldTimeToLive.CONFIG.enabled();
+        this.lastWarned = 9999;
         int gracePeriodSeconds = WorldTimeToLive.CONFIG.gracePeriodSeconds();
         switch (WorldTimeToLive.CONFIG.timings.mode()) {
             case COUNTDOWN:
