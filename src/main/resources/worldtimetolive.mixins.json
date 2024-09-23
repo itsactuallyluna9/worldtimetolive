@@ -3,7 +3,8 @@
   "package": "dev.itsactuallyluna9.worldtimetolive.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "MOTDMixin"
+    "MOTDMixin",
+    "ServerLevelMixin"
   ],
   "injectors": {
     "defaultRequire": 1

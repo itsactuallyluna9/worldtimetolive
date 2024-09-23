@@ -5,6 +5,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.minecraft.server.network.ServerLoginPacketListenerImpl;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 import org.jetbrains.annotations.NotNull;
 
@@ -184,6 +185,15 @@ public class WorldTimer {
                 handler.disconnect(component);
             }
         }
+    }
+
+    public boolean canDoInteraction(Player player) {
+        if (this.enabled && !WorldTimeToLive.SERVER.getPlayerList().isOp(player.getGameProfile())) {
+            if (this.state == WorldTimerState.BEFORE_START_GRACE_PERIOD) {
+                return WorldTimeToLive.CONFIG.effects.beforeAllowsBlocks();
+            }
+        }
+        return true;
     }
 
     public net.minecraft.network.chat.Component getMOTD() {

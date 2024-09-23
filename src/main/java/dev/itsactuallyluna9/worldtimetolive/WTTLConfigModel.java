@@ -41,7 +41,7 @@ public class WTTLConfigModel {
 
     public static class Effects {
         public boolean beforeGraceAllowsJoin = false;
-        public boolean beforeAllowsBlocks = false;
+        public boolean beforeAllowsBlocks = true;
         public boolean afterAllowsJoin = true;
         public boolean afterGraceSetSpectator = false;
         public boolean afterGraceKickPlayers = false;
