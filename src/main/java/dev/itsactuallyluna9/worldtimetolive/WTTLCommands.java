@@ -12,8 +12,6 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 
-import static dev.itsactuallyluna9.worldtimetolive.WorldTimer.getTagResolver;
-
 public class WTTLCommands {
     public static String WTTL_PREFIX = "<gradient:red:dark_purple>[WTTL]</gradient> ";
 

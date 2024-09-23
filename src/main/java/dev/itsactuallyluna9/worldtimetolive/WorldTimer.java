@@ -264,7 +264,7 @@ public class WorldTimer {
         WorldTimeToLive.ADVENTURE.console().sendMessage(component);
     }
 
-    public static @NotNull TagResolver getTagResolver() {
+    public @NotNull TagResolver getTagResolver() {
         return TagResolver.resolver("remaining", (args, context) -> {
             String method;
             if (args.peek() == null) {
