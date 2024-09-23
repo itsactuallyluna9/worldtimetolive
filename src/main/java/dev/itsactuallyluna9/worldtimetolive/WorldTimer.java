@@ -264,7 +264,7 @@ public class WorldTimer {
         WorldTimeToLive.ADVENTURE.console().sendMessage(component);
     }
 
-    public @NotNull TagResolver getTagResolver() {
+    public static @NotNull TagResolver getTagResolver() {
         return TagResolver.resolver("remaining", (args, context) -> {
             String method;
             if (args.peek() == null) {
@@ -285,13 +285,7 @@ public class WorldTimer {
         var now = Instant.now().getEpochSecond() - 1;
         var end = endTime.getEpochSecond();
         var diff = end - now;
-        var days = diff / 86400;
-        diff = diff % 86400;
-        var hours = diff / 3600;
-        diff = diff % 3600;
-        var minutes = diff / 60;
-        var seconds = diff % 60;
-        return days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+        return getTimeHuman(diff);
     }
 
     public String getTimeRemainingStopwatch() {
@@ -300,6 +294,32 @@ public class WorldTimer {
         var now = Instant.now().getEpochSecond() - 1;
         var end = endTime.getEpochSecond();
         var diff = end - now;
+        return getTimeStopwatch(diff);
+    }
+
+    public static String getTimeHuman(long diff) {
+        var days = diff / 86400;
+        diff = diff % 86400;
+        var hours = diff / 3600;
+        diff = diff % 3600;
+        var minutes = diff / 60;
+        var seconds = diff % 60;
+        // hide anything that is 0
+        // eg 59s
+        // keep lower units (so 1m 0s)
+        if (days == 0) {
+            if (hours == 0) {
+                if (minutes == 0) {
+                    return seconds + "s";
+                }
+                return minutes + "m " + seconds + "s";
+            }
+            return hours + "h " + minutes + "m " + seconds + "s";
+        }
+        return days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+    }
+
+    public static String getTimeStopwatch(long diff) {
         var days = diff / 86400;
         diff = diff % 86400;
         var hours = diff / 3600;
@@ -307,6 +327,15 @@ public class WorldTimer {
         var minutes = diff / 60;
         var seconds = diff % 60;
         // double pad hours, minutes, and seconds
+        // hide days and hours if they are 0 (keeping lower units)
+        // eg 1d 12:30:30
+        // or 1d 00:00:00
+        if (days == 0) {
+            if (hours == 0) {
+                return String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+            }
+            return String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+        }
         return days + "d " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
     }
 }
